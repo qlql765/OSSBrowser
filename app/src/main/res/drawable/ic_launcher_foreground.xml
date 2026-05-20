@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 云朵图标 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30c-8.3,0 -15.5,5.5 -17.8,13.2C30.5,44.5 26,49.8 26,56.2c0,7.7 6.3,14 14,14h28c7.7,0 14,-6.3 14,-14c0,-6.4 -4.5,-11.7 -10.2,-13C69.5,35.5 62.3,30 54,30z" />
+    <!-- 文件图标 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.7"
+        android:pathData="M44,50h20v2H44V50zM44,56h16v2H44V56zM44,62h12v2H44V62z" />
+</vector>

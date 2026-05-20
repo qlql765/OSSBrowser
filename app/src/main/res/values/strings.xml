@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OSS 文件浏览器</string>
+
+    <!-- 登录页 -->
+    <string name="login_title">OSS 配置</string>
+    <string name="hint_endpoint">Endpoint 地区（如：hangzhou、shanghai）</string>
+    <string name="hint_bucket">Bucket 名称</string>
+    <string name="hint_access_key_id">AccessKey ID</string>
+    <string name="hint_access_key_secret">AccessKey Secret</string>
+    <string name="btn_login">连接</string>
+    <string name="btn_clear">清除保存的信息</string>
+    <string name="login_connecting">正在连接…</string>
+    <string name="login_success">连接成功！</string>
+    <string name="login_failed">连接失败：%1$s</string>
+    <string name="login_empty_fields">请填写所有字段</string>
+
+    <!-- Endpoint 地区列表 -->
+    <string-array name="endpoint_regions">
+        <item>hangzhou（华东1）</item>
+        <item>shanghai（华东2）</item>
+        <item>nanjing（华东5）</item>
+        <item>qingdao（华北1）</item>
+        <item>beijing（华北2）</item>
+        <item>zhangjiakou（华北3）</item>
+        <item>huhehaote（华北5）</item>
+        <item>wulanchabu（华北6）</item>
+        <item>shenzhen（华南1）</item>
+        <item>guangzhou（华南2）</item>
+        <item>chengdu（西南1）</item>
+        <item>hongkong（香港）</item>
+        <item>singapore（新加坡）</item>
+        <item>kuala-lumpur（吉隆坡）</item>
+        <item>jakarta（雅加达）</item>
+        <item>bangkok（曼谷）</item>
+        <item>tokyo（东京）</item>
+        <item>seoul（首尔）</item>
+        <item>mumbai（孟买）</item>
+        <item>muscat（阿曼）</item>
+        <item>dubai（迪拜）</item>
+        <item>london（伦敦）</item>
+        <item>frankfurt（法兰克福）</item>
+        <item>paris（巴黎）</item>
+        <item>virginia（弗吉尼亚）</item>
+        <item>silicon-valley（硅谷）</item>
+        <item>toronto（多伦多）</item>
+        <item>monterrey（墨西哥）</item>
+        <item>saopaulo（圣保罗）</item>
+        <item>sydney（悉尼）</item>
+        <item>melbourne（墨尔本）</item>
+    </string-array>
+
+    <!-- 文件浏览 -->
+    <string name="file_browse_title">文件浏览</string>
+    <string name="file_empty">当前目录为空</string>
+    <string name="file_loading">加载中…</string>
+    <string name="file_error">加载失败：%1$s</string>
+    <string name="file_download_success">已下载到：%1$s</string>
+    <string name="file_download_failed">下载失败：%1$s</string>
+    <string name="file_save_success">保存成功！</string>
+    <string name="file_save_failed">保存失败：%1$s</string>
+    <string name="file_open_failed">无法打开此文件类型</string>
+    <string name="file_size">%1$s</string>
+    <string name="file_date">%1$s</string>
+    <string name="file_folder">文件夹</string>
+    <string name="file_file">文件</string>
+    <string name="current_path">当前路径：%1$s</string>
+    <string name="root_path">/</string>
+
+    <!-- 编辑器 -->
+    <string name="editor_title">编辑文件</string>
+    <string name="editor_loading">加载文件中…</string>
+    <string name="editor_save">保存</string>
+    <string name="editor_modified">● 已修改</string>
+    <string name="editor_unsaved_changes">文件已修改，确定要放弃更改吗？</string>
+    <string name="editor_discard">放弃</string>
+    <string name="editor_keep_editing">继续编辑</string>
+
+    <!-- 下载 -->
+    <string name="download_title">下载文件</string>
+    <string name="downloading">正在下载…</string>
+    <string name="download_complete">下载完成</string>
+
+    <!-- 通用 -->
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="ok">好的</string>
+    <string name="retry">重试</string>
+    <string name="settings">设置</string>
+    <string name="logout">退出登录</string>
+    <string name="logout_confirm">确定要退出登录并清除保存的配置吗？</string>
+    <string name="permission_denied">权限被拒绝，无法完成操作</string>
+
+    <!-- 菜单 -->
+    <string name="menu_download">下载</string>
+    <string name="menu_edit">编辑</string>
+    <string name="menu_open">打开</string>
+    <string name="menu_delete">删除</string>
+    <string name="menu_upload">上传文件</string>
+    <string name="menu_logout">退出登录</string>
+</resources>
