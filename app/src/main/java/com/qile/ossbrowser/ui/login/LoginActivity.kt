@@ -79,15 +79,79 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 先检查是否有保存的配置，有则直接尝试自动登录
+        configManager = OSSConfigManager(this)
+        val config = configManager.getConfigSync()
+
+        if (config.isComplete) {
+            Log.d(TAG, "Found saved config, auto-connecting immediately...")
+            // 有配置：直接尝试连接，不设置登录布局
+            autoConnectAndNavigate(config)
+            return
+        }
+
+        // 无配置：显示登录页面
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configManager = OSSConfigManager(this)
-
         setupToolbar()
         setupEndpointDropdown()
-        loadSavedConfig()
         setupButtons()
+    }
+
+    /**
+     * 自动连接并跳转（不显示登录页面）
+     */
+    private fun autoConnectAndNavigate(config: OSSConfigManager.OSSConfig) {
+        lifecycleScope.launch {
+            try {
+                val app = application as OSSBrowserApp
+                val ossClient = app.initOSSClient(config.endpoint, config.accessKeyId, config.accessKeySecret)
+
+                // 验证连接
+                Log.d(TAG, "Auto-connecting to bucket: ${config.bucket}")
+                val listRequest = ListObjectsRequest(config.bucket, "", "", "/", 1)
+                ossClient.listObjects(listRequest)
+
+                // 连接成功，直接跳转
+                Log.d(TAG, "Auto-login successful, navigating...")
+                val intent = Intent(this@LoginActivity, FileBrowseActivity::class.java).apply {
+                    putExtra(FileBrowseActivity.EXTRA_BUCKET, config.bucket)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                startActivity(intent)
+                finish()
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Auto-login failed, showing login form", e)
+
+                // 连接失败，显示登录页面并回填信息
+                binding = ActivityLoginBinding.inflate(layoutInflater)
+                setContentView(binding.root)
+
+                setupToolbar()
+                setupEndpointDropdown()
+                setupButtons()
+
+                // 回填保存的信息
+                val savedRegion = REGION_ENDPOINT_MAP.entries
+                    .firstOrNull { it.value == config.endpoint }?.key ?: config.endpoint
+                val regions = resources.getStringArray(R.array.endpoint_regions)
+                val displayText = regions.firstOrNull { it.startsWith(savedRegion) } ?: savedRegion
+                binding.etEndpoint.setText(displayText, false)
+                binding.etBucket.setText(config.bucket)
+                binding.etAccessKeyId.setText(config.accessKeyId)
+                binding.etAccessKeySecret.setText(config.accessKeySecret)
+
+                Toast.makeText(
+                    this@LoginActivity,
+                    getString(R.string.login_failed, e.message ?: "连接失败，请检查配置"),
+                    Toast.LENGTH_LONG
+                ).show()
+                (application as OSSBrowserApp).disconnect()
+            }
+        }
     }
 
     private fun setupToolbar() {
@@ -102,31 +166,6 @@ class LoginActivity : AppCompatActivity() {
         val regions = resources.getStringArray(R.array.endpoint_regions)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, regions)
         binding.etEndpoint.setAdapter(adapter)
-    }
-
-    /**
-     * 加载已保存的配置
-     */
-    private fun loadSavedConfig() {
-        lifecycleScope.launch {
-            val config = configManager.getConfig()
-            if (config.isComplete) {
-                Log.d(TAG, "Found saved config, auto-filling")
-                // 从完整 endpoint 反查地区名称
-                val savedRegion = REGION_ENDPOINT_MAP.entries
-                    .firstOrNull { it.value == config.endpoint }?.key ?: config.endpoint
-                // 在下拉列表中找到匹配项并设置
-                val regions = resources.getStringArray(R.array.endpoint_regions)
-                val displayText = regions.firstOrNull { it.startsWith(savedRegion) } ?: savedRegion
-                binding.etEndpoint.setText(displayText, false)
-
-                binding.etBucket.setText(config.bucket)
-                binding.etAccessKeyId.setText(config.accessKeyId)
-                binding.etAccessKeySecret.setText(config.accessKeySecret)
-                // 自动尝试连接
-                attemptLogin()
-            }
-        }
     }
 
     private fun setupButtons() {
@@ -197,6 +236,7 @@ class LoginActivity : AppCompatActivity() {
                 // 跳转到文件浏览页
                 val intent = Intent(this@LoginActivity, FileBrowseActivity::class.java).apply {
                     putExtra(FileBrowseActivity.EXTRA_BUCKET, bucket)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
                 startActivity(intent)
                 finish()

@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 /**
  * OSS 配置数据存储管理
@@ -77,6 +78,15 @@ class OSSConfigManager(private val context: Context) {
      */
     suspend fun getConfig(): OSSConfig {
         return getConfigFlow().first()
+    }
+
+    /**
+     * 同步获取配置（阻塞式，用于启动时检查）
+     */
+    fun getConfigSync(): OSSConfig {
+        return runBlocking {
+            getConfigFlow().first()
+        }
     }
 
     /**
