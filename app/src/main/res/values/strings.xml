@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OSS 文件浏览器</string>
+    <string name="app_name">阿里OSS</string>
 
     <!-- 登录页 -->
     <string name="login_title">OSS 配置</string>

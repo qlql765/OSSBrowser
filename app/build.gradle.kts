@@ -12,7 +12,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "1.1"
+        versionName = "v1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,7 +67,7 @@ android {
     // 配置 APK 输出文件名
     applicationVariants.configureEach {
         outputs.configureEach {
-            (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = "ossBrowser-${name}.apk"
+            (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = "ossBrowser-${name}-${versionName}.apk"
         }
     }
 }
